@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from .models import User, Item
+from datetime import *
 
 
 def Landing(request):
@@ -55,10 +56,19 @@ def TodoView(request):
             # pw[0] is the first item in the tuple
             return HttpResponse("Incorrect PW")
         else:
-            todo_list = Item.objects.filter(user=user_q).values_list()
+            todo_list = Item.objects.filter(user_id=user[0]).values_list()
             return render(
                 request,
                 "todo.html",
                 {"user_id": user[0], "user_name": user[1], "todo_items": todo_list},
             )
 
+
+def addTodo(request, user_id):
+    new_item = Item(
+        user=User.objects.get(id=user_id),
+        content=request.POST["content"],
+        date_created=datetime.now(),
+    )
+    new_item.save()
+    return HttpResponseRedirect("/todo/")

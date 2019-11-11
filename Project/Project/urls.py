@@ -21,6 +21,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.Landing),
     path("todo/", views.TodoView),
+    path("addTodo/<int:user_id>/", views.addTodo),
     path("register/", views.Register),
     path("create/", views.Create),
 ]
