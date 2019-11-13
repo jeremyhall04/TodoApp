@@ -20,8 +20,10 @@ from todoApp import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.Landing),
-    path("todo/", views.TodoView),
+    path("login/", views.Login),
+    path("todo/<int:user_id>/", views.TodoView),
     path("addTodo/<int:user_id>/", views.addTodo),
+    path("deleteTodo/<int:user_id>/<int:item_id>/", views.deleteTodo),
     path("register/", views.Register),
     path("create/", views.Create),
 ]

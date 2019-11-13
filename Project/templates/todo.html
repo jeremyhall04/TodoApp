@@ -13,9 +13,10 @@
 <body>
     <h3>{{ user_name }}'s Todo List</h3>
     <ul>
-        {% for items in todo_items %}
-        <li>{{ items.content }}
-            <form action="/deleteTodo/{{item.id}}/" style="display:inline" method="POST">{% csrf_token %}
+        {% for item in todo_items %}
+        <li>{{ item.content }}
+            <form action="/deleteTodo/{{ user_id }}/{{ item.id }}/" style="display:inline" method="POST">
+                {% csrf_token %}
                 <input type="submit" value="Delete">
             </form>
         </li>
@@ -25,6 +26,10 @@
     <form action="/addTodo/{{ user_id }}/" method="POST">{% csrf_token %}
         <input type="text" name="content" />
         <input type="submit" value="Add">
+    </form>
+
+    <form action="/" method="POST">{% csrf_token %}
+        <input type="submit" value="Return">
     </form>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
