@@ -24,6 +24,7 @@ urlpatterns = [
     path("todo/<int:user_id>/", views.TodoView),
     path("addTodo/<int:user_id>/", views.addTodo),
     path("deleteTodo/<int:user_id>/<int:item_id>/", views.deleteTodo),
+    path("completeTodo/<int:user_id>/<int:item_id>/", views.completeTodo),
     path("register/", views.Register),
     path("create/", views.Create),
 ]

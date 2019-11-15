@@ -10,9 +10,9 @@
     <title>Todo List</title>
 </head>
 
-<body>
+<body class="mb-4">
     <div class="text-center text-secondary text-color-red jumbotron jumbotron-fluid">
-        <h3>{{ user_name }}'s To do List</h3>
+        <h3 class="display-3">{{ user_name }}'s To do List</h3>
         <div class="container">
             <form action="/" method="POST">{% csrf_token %}
                 <input type="submit" class="btn btn-sm btn-secondary" value="Log out">
@@ -35,7 +35,7 @@
                     <div class="col col-3">
                         <p class="text-secondary text-sm text-right">DEADLINE: {{ item.deadline }}</p>
                         <div class="container text-right float-right">
-                            <form action="/deleteTodo/{{ user_id }}/{{ item.id }}/" method="POST">
+                            <form action="/completeTodo/{{ user_id }}/{{ item.id }}/" method="POST">
                                 {% csrf_token %}
                                 <input type="submit" class="mt-1 btn btn-primary btn-sm" value="Completed">
                             </form>
@@ -66,8 +66,9 @@
                         Add a deadline
                     </button>
                     <div class="dropdown-menu pl-3 pr-3" aria-labelledby="addInfo">
-                        YYYY-MM-DD
-                        <input type="text" class="form-control" name="deadline">
+                        <label for="date">Select a date</label>
+                        <input type="date" max="3000-01-01" min="1990-01-01" class="form-control" name="deadline_date">
+                        <input type="time" class="form-control" name="deadline_time">
                     </div>
                 </div>
             </div>
