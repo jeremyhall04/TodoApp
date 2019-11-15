@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from .models import User, Item
 from datetime import *
+from django.utils import timezone
 
 
 def Landing(request):
@@ -74,6 +75,8 @@ def addTodo(request, user_id):
 
 def deleteTodo(request, user_id, item_id):
     del_item = Item.objects.get(id=item_id)
-    del_item.delete()
+    del_item.completed_date = timezone.now()
+    del_item.complete = True
+    del_item.save()
     url = "/todo/" + str(user_id) + "/"
     return HttpResponseRedirect(url)

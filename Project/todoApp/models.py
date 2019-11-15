@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class User(models.Model):
@@ -12,4 +13,4 @@ class Item(models.Model):
     content = models.CharField(max_length=100)
     date_created = models.TimeField(auto_now_add=False)
     complete = models.BooleanField(default=False)
-    completed_date = models.TimeField()
+    completed_date = models.TimeField(null=True)

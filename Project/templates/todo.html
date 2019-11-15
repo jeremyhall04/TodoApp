@@ -18,12 +18,15 @@
         <h1 class="text-display-5">To do:</h1>
         <ul class="list-group">
             {% for item in todo_items %}
+            {{ item.complete }}
+            {% if item.complete == False %}
             <li class="list-group-item">{{ item.content }}
                 <form action="/deleteTodo/{{ user_id }}/{{ item.id }}/" style="display:inline" method="POST">
                     {% csrf_token %}
-                    <input type="submit" class="btn btn-primary btn-sm" value="Delete">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Completed">
                 </form>
             </li>
+            {% endif %}
             {% endfor %}
         </ul>
     </div>
@@ -32,6 +35,22 @@
         <input type="text" name="content" />
         <input type="submit" value="Add">
     </form>
+
+    <div class="container">
+        <h1 class="text-display-5">Completed:</h1>
+        <ul class="list-group">
+            {% for item in todo_items %}
+            {% if item.complete == True %}
+            <li class="list-group-item">{{ item.content }}
+                <form action="/deleteTodo/{{ user_id }}/{{ item.id }}/" style="display:inline" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-primary btn-sm" value="Completed">
+                </form>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
 
     <form action="/" method="POST">{% csrf_token %}
         <input type="submit" value="Log out">
