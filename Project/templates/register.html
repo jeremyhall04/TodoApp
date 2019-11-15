@@ -11,16 +11,21 @@
 </head>
 
 <body>
-
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Register</li>
+        </ol>
+    </nav>
     <div class="container">
         <h3>Register an account:</h3>
         <form action="/create/" method="POST">{% csrf_token %}
             <h6>Username</h6>
             <input type="text" name="username">
             <h6>Password</h6>
-            <input type="text" name="password">
+            <input type="password" name="password">
             <h6>Re-enter password</h6>
-            <input type="text" name="re_password">
+            <input type="password" name="re_password">
             <h6>Enter an email adress</h6>
             <input type="text" name="email">
             <br><br>

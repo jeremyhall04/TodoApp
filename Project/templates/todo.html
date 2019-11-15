@@ -11,25 +11,30 @@
 </head>
 
 <body>
-    <h3>{{ user_name }}'s Todo List</h3>
-    <ul>
-        {% for item in todo_items %}
-        <li>{{ item.content }}
-            <form action="/deleteTodo/{{ user_id }}/{{ item.id }}/" style="display:inline" method="POST">
-                {% csrf_token %}
-                <input type="submit" value="Delete">
-            </form>
-        </li>
-        {% endfor %}
-    </ul>
+    <div class="text-center text-secondary text-color-red jumbotron jumbotron-fluid">
+        <h3>{{ user_name }}'s To do List</h3>
+    </div>
+    <div class="container">
+        <h1 class="text-display-5">To do:</h1>
+        <ul class="list-group">
+            {% for item in todo_items %}
+            <li class="list-group-item">{{ item.content }}
+                <form action="/deleteTodo/{{ user_id }}/{{ item.id }}/" style="display:inline" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-primary btn-sm" value="Delete">
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 
-    <form action="/addTodo/{{ user_id }}/" method="POST">{% csrf_token %}
+    <form class="form-group" action="/addTodo/{{ user_id }}/" method="POST">{% csrf_token %}
         <input type="text" name="content" />
         <input type="submit" value="Add">
     </form>
 
     <form action="/" method="POST">{% csrf_token %}
-        <input type="submit" value="Return">
+        <input type="submit" value="Log out">
     </form>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

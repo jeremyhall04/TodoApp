@@ -59,14 +59,17 @@ def TodoView(request, user_id):
 
 
 def addTodo(request, user_id):
-    new_item = Item(
-        user=User.objects.get(id=user_id),
-        content=request.POST["content"],
-        date_created=datetime.now(),
-    )
-    new_item.save()
-    url = "/todo/" + str(user_id) + "/"
-    return HttpResponseRedirect(url)
+    if not request.POST["content"]:
+        return HttpResponse("Please make sure you fill out the textfield!")
+    else:
+        new_item = Item(
+            user=User.objects.get(id=user_id),
+            content=request.POST["content"],
+            date_created=datetime.now(),
+        )
+        new_item.save()
+        url = "/todo/" + str(user_id) + "/"
+        return HttpResponseRedirect(url)
 
 
 def deleteTodo(request, user_id, item_id):
