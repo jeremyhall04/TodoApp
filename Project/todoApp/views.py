@@ -47,11 +47,22 @@ def Create(request):
 
 def TodoView(request, user_id):
     user_data = User.objects.filter(id=user_id).values_list("username")
-    todo_list = Item.objects.filter(user_id=user_id).values_list("id", "content")
+    todo_list = Item.objects.filter(user_id=user_id).values_list(
+        "id", "content", "date_created", "complete", "completed_date", "deadline"
+    )
     item_list = []
+    print(todo_list)
     for objects in todo_list:
-        item = Item(id=objects[0], content=objects[1])
+        item = Item(
+            id=objects[0],
+            content=objects[1],
+            date_created=objects[2],
+            complete=objects[3],
+            completed_date=objects[4],
+            deadline=objects[5],
+        )
         item_list.append(item)
+        print(item_list)
     return render(
         request,
         "todo.html",
@@ -67,6 +78,7 @@ def addTodo(request, user_id):
             user=User.objects.get(id=user_id),
             content=request.POST["content"],
             date_created=datetime.now(),
+            deadline=request.POST["deadline"],
         )
         new_item.save()
         url = "/todo/" + str(user_id) + "/"
@@ -75,7 +87,7 @@ def addTodo(request, user_id):
 
 def deleteTodo(request, user_id, item_id):
     del_item = Item.objects.get(id=item_id)
-    del_item.completed_date = timezone.now()
+    del_item.completed_date = datetime.now()
     del_item.complete = True
     del_item.save()
     url = "/todo/" + str(user_id) + "/"

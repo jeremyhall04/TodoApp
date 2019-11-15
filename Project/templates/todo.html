@@ -13,48 +13,78 @@
 <body>
     <div class="text-center text-secondary text-color-red jumbotron jumbotron-fluid">
         <h3>{{ user_name }}'s To do List</h3>
+        <div class="container">
+            <form action="/" method="POST">{% csrf_token %}
+                <input type="submit" class="btn btn-sm btn-secondary" value="Log out">
+            </form>
+        </div>
     </div>
     <div class="container">
         <h1 class="text-display-5">To do:</h1>
         <ul class="list-group">
+            {% if not todo_items %}
+            <h1>You've got nothing to do!</h1>
+            {% else %}
             {% for item in todo_items %}
-            {{ item.complete }}
-            {% if item.complete == False %}
-            <li class="list-group-item">{{ item.content }}
-                <form action="/deleteTodo/{{ user_id }}/{{ item.id }}/" style="display:inline" method="POST">
-                    {% csrf_token %}
-                    <input type="submit" class="btn btn-primary btn-sm" value="Completed">
-                </form>
+            {% if item.complete is False %}
+            <li class="list-group-item">
+                <div class="container row">
+                    <div class="col col-9">
+                        <h4>{{ item.content }}</h4>
+                    </div>
+                    <div class="col col-3">
+                        <p class="text-secondary text-sm text-right">DEADLINE: {{ item.deadline }}</p>
+                        <div class="container text-right float-right">
+                            <form action="/deleteTodo/{{ user_id }}/{{ item.id }}/" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" class="mt-1 btn btn-primary btn-sm" value="Completed">
+                            </form>
+                            <form action="/deleteTodo/{{ user_id }}/{{ item.id }}/" style="display:inline"
+                                method="POST">
+                                {% csrf_token %}
+                                <input type="submit" class="mt-1 btn btn-danger btn-sm" value="Delete">
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </li>
             {% endif %}
             {% endfor %}
+            {% endif %}
         </ul>
     </div>
-
-    <form class="form-group" action="/addTodo/{{ user_id }}/" method="POST">{% csrf_token %}
-        <input type="text" name="content" />
-        <input type="submit" value="Add">
-    </form>
+    <div class="container mt-4">
+        <h3 class="text-secondary">Add an item:</h3>
+        <form class="form-group" action="/addTodo/{{ user_id }}/" method="POST">{% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" name="content" />
+                </div>
+                <div class="col">
+                    <input type="submit" value="Add" class="btn btn-primary btn-block">
+                    <button class="btn btn-secondary dropdown-toggle btn-block" id="addInfo" data-toggle="dropdown">
+                        Add a deadline
+                    </button>
+                    <div class="dropdown-menu pl-3 pr-3" aria-labelledby="addInfo">
+                        YYYY-MM-DD
+                        <input type="text" class="form-control" name="deadline">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
     <div class="container">
         <h1 class="text-display-5">Completed:</h1>
         <ul class="list-group">
             {% for item in todo_items %}
-            {% if item.complete == True %}
-            <li class="list-group-item">{{ item.content }}
-                <form action="/deleteTodo/{{ user_id }}/{{ item.id }}/" style="display:inline" method="POST">
-                    {% csrf_token %}
-                    <input type="submit" class="btn btn-primary btn-sm" value="Completed">
-                </form>
+            {% if item.complete is True %}
+            <li class="list-group-item">{{ item.content }} was completed on: {{ item.completed_date }}
             </li>
             {% endif %}
             {% endfor %}
         </ul>
     </div>
-
-    <form action="/" method="POST">{% csrf_token %}
-        <input type="submit" value="Log out">
-    </form>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

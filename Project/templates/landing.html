@@ -21,10 +21,9 @@
         <h3 class="container">Log in to see what you have to do!</h3>
         <form class="form-group" action="/login/" method="POST">{% csrf_token %}
             <label for="username">Username</label>
-            <input type="text" class="form-control" name="username">
-            <p>Password</p>
-            <input type="password" class="form-control" name="password">
-            <br>
+            <input type="text" class="form-control mb-2" name="username">
+            <p class="mt-2">Password</p>
+            <input type="password" class="form-control mb-4" name="password">
             <input type="submit" class="btn btn-success btn-lg btn-block" value="Log In">
         </form>
         <h4>Don't have an account?</h4>
