@@ -1,0 +1,49 @@
+body {
+    margin:0;
+    padding:0;
+}
+
+@media (max-width: 576px) {
+    body {
+        background-color: blue;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {  
+    body {
+        background-color: red;
+    }
+    #todoitem {
+        color: blue;
+        columns: col-9;
+    }
+}
+ 
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {  
+    body {
+        background-color: orange;
+    }
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    body {
+        background-color: green;
+    }
+    #details {
+        color: red;
+    }
+    #deadline {
+        color: blue;
+    }
+
+}
+ 
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+    body {
+        background-color: yellow;
+    }
+}

@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from .models import User, Item
 from datetime import *
 from django.utils.dateparse import parse_datetime
+import operator
 
 
 def Landing(request):
@@ -51,7 +52,7 @@ def TodoView(request, user_id):
         "id", "content", "date_created", "complete", "completed_date", "deadline"
     )
     item_list = []
-    print(todo_list)
+    # print(todo_list)
     for objects in todo_list:
         item = Item(
             id=objects[0],
@@ -63,11 +64,22 @@ def TodoView(request, user_id):
         )
         item_list.append(item)
         # print(item_list)
+    # sortDate(item_list, ol)
     return render(
         request,
         "todo.html",
-        {"user_id": user_id, "user_name": user_data[0][0], "todo_items": item_list},
+        {"user_id": user_id, "user_name": user_data[0][0], "todo_items": item_list,},
     )
+
+
+def sortDate(item_list, ol):
+    ###Create recursive sorter??
+    i = 0
+    for item in item_list:
+        ol.append(item.deadline)
+    while i < len(item_list):
+        print(item_list[i].deadline)
+        i += 1
 
 
 def addTodo(request, user_id):
